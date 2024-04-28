@@ -35,12 +35,3 @@ class userRole(Base):
     user_id = Column(Integer, ForeignKey('Users.id'))
     role = Column(String(255))
     user = relationship("User", back_populates="roles")
-
-
-class Product(Base):
-    __tablename__ = 'Products'
-
-    id = Column(Integer, primary_key=True, nullable=False)
-    identifier = Column(String(255), index=True)
-    price = Column(String(255))
-    is_available = Column(Boolean)
