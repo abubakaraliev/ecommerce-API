@@ -17,7 +17,6 @@ def signup(userData: createUser, db: Session = Depends(get_db)):
         "message": "signup successful",
     }
 
-
 @router.post('/login', status_code=status.HTTP_200_OK)
 def login(userData: loginUser, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == userData.username).first()

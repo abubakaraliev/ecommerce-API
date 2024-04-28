@@ -1,10 +1,12 @@
 env/
 .env
 __pycache__
-tests/
+tests/.pytest_cache/tests
 alembic/
 core/user/__init__.py
 core/__init__.py
 core/user/test_user.py
 docker-compose.yml
 alembic.ini
+__init__.py
+.pytest_cache

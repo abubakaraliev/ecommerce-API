@@ -1,6 +1,6 @@
+from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 from functools import lru_cache
-
 
 class Settings(BaseSettings):
     DB_HOST: str
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     DB_PORT: str
     SECRET_KEY: str
 
-    class Config:
+    class Config(ConfigDict):
         env_file: str = ".env"
         extra = "allow"
 

@@ -4,7 +4,6 @@ from enum import Enum
 from datetime import datetime, timedelta
 from config import get_settings
 from db import Base
-import bcrypt
 import jwt
 
 
@@ -28,7 +27,6 @@ class User(Base):
             'exp': expiration
         }
         return jwt.encode(payload, f"{get_settings().SECRET_KEY}", algorithm='HS256')
-
 
 class userRole(Base):
     __tablename__ = 'userRoles'
