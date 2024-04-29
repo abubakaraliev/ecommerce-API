@@ -8,10 +8,10 @@ client = TestClient(app)
 def get_product_data():
     product_data = {
         "identifier": fake.name(),
-        "price": random.randint(1, 1000),
+        "price": str(random.randint(1, 1000)),
         "is_available": True | False
     }
-    response = client.post('/user/products', json=product_data)
+    response = client.post('/api/products', json=product_data)
     return response
     
     
@@ -21,7 +21,7 @@ def test_createproduct():
         "price": str(random.randint(1, 1000)),
         "is_available": True | False
     }
-    response = client.post('/user/products', json=product_create_data)
+    response = client.post('/api/products', json=product_create_data)
     assert response.status_code == 201
     assert response.json() == {
         "message": "product created successfully"

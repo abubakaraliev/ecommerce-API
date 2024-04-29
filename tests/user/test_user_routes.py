@@ -11,7 +11,7 @@ def get_user_data():
         "email": fake.email(),
         "password": "password"
     }
-    response = client.post('/user/signup', json=user_data)
+    response = client.post('/api/signup', json=user_data)
     return response
 
 def test_signup():
@@ -20,7 +20,7 @@ def test_signup():
         "email": fake.email(),
         "password": "password"
     }
-    response = client.post('/user/signup', json=sign_up_data)
+    response = client.post('/api/signup', json=sign_up_data)
     assert response.status_code == 201
     assert response.json() == {
         "message": "signup successful"
@@ -29,10 +29,20 @@ def test_signup():
 def test_login():
     response = get_user_data()
     login_data = {
-        "username": "Richard Collins",
+        "username": "Daniel Burns",
         "password": "password"
     }
-    response = client.post('/user/login', json=login_data)
+    response = client.post('/api/login', json=login_data)
+    assert response.status_code == 200
+    
+def test_update_user():
+    update_user = {
+       "username": "Updated Daniel Burns",
+       "email": "Daniel@updated.com",
+       "password": "password"
+       
+    }
+    response = client.put(f"/api/users/<int:id>?id=75", json=update_user)
     assert response.status_code == 200
 
     

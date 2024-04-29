@@ -19,7 +19,7 @@ class User(Base):
     username = Column(String(255), unique=True, index=True)
     email = Column(String(255), unique=True, index=True)
     password = Column(String(255), nullable=False)
-    roles = relationship("userRole", back_populates="user")
+    roles = relationship("userRole", cascade="all,delete", back_populates="user")
     def generate_token(self):
         expiration = datetime.now() + timedelta(days=1)
         payload = {
@@ -34,4 +34,4 @@ class userRole(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
     user_id = Column(Integer, ForeignKey('Users.id'))
     role = Column(String(255))
-    user = relationship("User", back_populates="roles")
+    user = relationship("User", cascade="all,delete", back_populates="roles")

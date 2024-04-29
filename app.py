@@ -6,8 +6,8 @@ from core.product.routes import router as product_router
 
 app = FastAPI()
 
-app.include_router(user_router, prefix="/user")
-app.include_router(product_router, prefix="/user")
+app.include_router(user_router, prefix="/api")
+app.include_router(product_router, prefix="/api")
 
 Base.metadata.create_all(bind=engine)
 
