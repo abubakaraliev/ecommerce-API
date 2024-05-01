@@ -2,6 +2,7 @@ from pydantic import ConfigDict
 from pydantic_settings import BaseSettings
 from functools import lru_cache
 
+
 class Settings(BaseSettings):
     DB_HOST: str
     DB_NAME: str
@@ -11,7 +12,7 @@ class Settings(BaseSettings):
     SECRET_KEY: str
 
     class Config(ConfigDict):
-        env_file: str = ".env"
+        env_file: str = "../.env"
         extra = "allow"
 
 

@@ -1,10 +1,19 @@
+from db import Base
 from sqlalchemy import Column, ForeignKey, Boolean, String, Integer
 from sqlalchemy.orm import relationship
 from enum import Enum
 from datetime import datetime, timedelta
 from config import get_settings
-from db import Base
 import jwt
+
+
+class Product(Base):
+    __tablename__ = 'Products'
+
+    id = Column(Integer, primary_key=True, nullable=False)
+    identifier = Column(String(255), index=True)
+    price = Column(String(255))
+    is_available = Column(Boolean)
 
 
 class Role(Enum):
@@ -19,7 +28,9 @@ class User(Base):
     username = Column(String(255), unique=True, index=True)
     email = Column(String(255), unique=True, index=True)
     password = Column(String(255), nullable=False)
-    roles = relationship("userRole", cascade="all,delete", back_populates="user")
+    roles = relationship("userRole", cascade="all,delete",
+                         back_populates="user")
+
     def generate_token(self):
         expiration = datetime.now() + timedelta(days=1)
         payload = {
@@ -27,6 +38,7 @@ class User(Base):
             'exp': expiration
         }
         return jwt.encode(payload, f"{get_settings().SECRET_KEY}", algorithm='HS256')
+
 
 class userRole(Base):
     __tablename__ = 'userRoles'
