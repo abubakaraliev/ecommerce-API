@@ -1,3 +1,3 @@
-# API - BackEnd
+# API - E-COMMERCE
 
-# Developper avec FastAPI
+# Language: Python, Framework : FastAPI, ORM: Alembic, Tests unitaire: Pytest, DB : Mysql
