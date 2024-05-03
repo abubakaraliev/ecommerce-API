@@ -1,0 +1,10 @@
+fastapi==0.111.0
+pydantic==2.7.1
+pydantic_settings==2.2.1
+PyJWT==2.8.0
+pytest==8.1.2
+python-decouple==3.8
+python_bcrypt==0.3.2
+SQLAlchemy==2.0.29
+starlette==0.37.2
+uvicorn==0.29.0
