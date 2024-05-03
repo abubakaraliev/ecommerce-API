@@ -1,5 +1,8 @@
 from db import Base
 from sqlalchemy import Column, ForeignKey, Boolean, String, Integer
+from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends
+from typing import Annotated
 from sqlalchemy.orm import relationship
 from enum import Enum
 from datetime import datetime, timedelta
@@ -28,16 +31,7 @@ class User(Base):
     username = Column(String(255), unique=True, index=True)
     email = Column(String(255), unique=True, index=True)
     password = Column(String(255), nullable=False)
-    roles = relationship("userRole", cascade="all,delete",
-                         back_populates="user")
-
-    def generate_token(self):
-        expiration = datetime.now() + timedelta(days=1)
-        payload = {
-            'id': self.id,
-            'exp': expiration
-        }
-        return jwt.encode(payload, f"{get_settings().SECRET_KEY}", algorithm='HS256')
+    roles = relationship("userRole", back_populates="user")
 
 
 class userRole(Base):
@@ -46,4 +40,4 @@ class userRole(Base):
     id = Column(Integer, primary_key=True, index=True, nullable=False)
     user_id = Column(Integer, ForeignKey('Users.id'))
     role = Column(String(255))
-    user = relationship("User", cascade="all,delete", back_populates="roles")
+    user = relationship("User", back_populates="roles")
