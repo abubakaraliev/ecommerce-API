@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_PORT: str
     SECRET_KEY: str
+    DATABASE_URL: str
 
     class Config(ConfigDict):
         env_file: str = "../.env"

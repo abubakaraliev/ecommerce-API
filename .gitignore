@@ -9,3 +9,4 @@ core/user/test_user.py
 alembic.ini
 __init__.py
 .pytest_cache
+.dockerignore

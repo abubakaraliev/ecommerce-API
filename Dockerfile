@@ -14,4 +14,6 @@ pip install mysqlclient \
 
 WORKDIR /app/src
 
+EXPOSE 9090
+
 CMD ["python3", "app.py"]

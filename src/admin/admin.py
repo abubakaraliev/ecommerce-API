@@ -17,7 +17,7 @@ def addUser(userData: createUser, db: Session = Depends(get_db)):
             detail=f"User {userData.username} already exists"
         )
     hashed_password = bcrypt.hashpw(
-        userData.password.encode('utf-8'), bcrypt.gensalt())
+        userData.password.encode('utf-8'), bcrypt.gensalt('utf-8'))
     user = User(username=userData.username,
                 email=userData.email, password=hashed_password)
     db.add(user)

@@ -1,24 +1,50 @@
-version: '3.8'
+version: "3.8"
 
 services:
-  api:
-    build:
-      context: ./
-    ports:
-      - "9090:9090"
-    depends_on:
-      - db
-    environment:
-      - DATABASE_URL=mysql://${DB_USERNAME}:${DB_PASSWORD}@db:3306/${DB_NAME}
-
   db:
     image: mysql:latest
     ports:
       - "3306:3306"
+    container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_NAME}
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "--password=root",
+        ]
+      timeout: 20s
+      retries: 10
     volumes:
       - ./dbScript:/docker-entrypoint-initdb.d
+    networks:
+      - my-network
+
+  api:
+    build:
+      context: ./
+    ports:
+      - "9090:9090"
+    container_name: api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mysql://${DB_USERNAME}:${DB_PASSWORD}@db:3306/${DB_NAME}
+    restart: always
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
