@@ -16,8 +16,8 @@ def addUser(userData: createUser, db: Session = Depends(get_db)):
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"User {userData.username} already exists"
         )
-    hashed_password = bcrypt.hashpw(
-        userData.password.encode('utf-8'), bcrypt.gensalt('utf-8'))
+    hashed_password = bcrypt.hashpw(userData.password.encode('utf-8'), bcrypt.gensalt())
+    
     user = User(username=userData.username,
                 email=userData.email, password=hashed_password)
     db.add(user)
@@ -142,7 +142,7 @@ def get_product(id: int, db: Session = Depends(get_db)):
             detail=f"Product {id} not found",
         )
     product = {"id": product.id, "identifier": product.identifier,
-                "price": product.price, "is_available": product.is_available}
+               "price": product.price, "is_available": product.is_available}
     return JSONResponse(content=product)
 
 
@@ -153,7 +153,7 @@ def get_all_products(db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"No products found",
-            )
+        )
     products = [
         {"id": product.id, "identifier": product.identifier,
             "price": product.price, "is_available": product.is_available} for product in products]

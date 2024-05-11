@@ -4,6 +4,11 @@ class createUser(BaseModel):
     username: str
     email: str
     password: str
+    
+class updateUser(BaseModel):
+    username: str
+    email: str
+    password: str
 
 
 class loginUser(BaseModel):
